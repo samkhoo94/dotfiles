@@ -6,11 +6,11 @@ return {
       enabled = true,
       view = "cmdline",
     },
-    routes = {
-      {
-        view = "notify",
-        filter = { event = "msg_showmode" },
-      },
-    },
+    -- routes = {
+    --   {
+    --     view = "notify",
+    --     filter = { event = "msg_showmode" },
+    --   },
+    -- },
   },
 }
