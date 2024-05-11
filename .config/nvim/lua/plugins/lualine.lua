@@ -99,7 +99,7 @@ return {
 				},
 				lualine_z = {
 					function()
-						return " " .. os.date("%R")
+						return "  " .. os.date("%R")
 					end,
 				},
 			},
