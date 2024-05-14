@@ -1,0 +1,28 @@
+
+{
+    "DBT Model Template": {
+        "prefix": "dbtmodel",
+        "body": [
+            "{{",
+            "    config(",
+            "        unique_key='${1:[UNIQUE KEY]}',",
+            "        indexes=[",
+            "            {'columns':['${1:[UNIQUE KEY]}']}",
+            "        ]",
+            "    )",
+            "}}",
+            "",
+            "with source_data as (",
+            "    select        ",
+            "        ${2:[COLUMNS]}",
+            "    from {{ source('${3:stage}', '${4:[TABLE]}') }}",
+            "    {% if is_incremental() %}",
+            "       where last_updated >= {{ n_days_ago(3) }}",
+            "    {% endif %}",
+            ")",
+            "",
+            "select * from source_data",
+            ""
+        ]
+    }
+}
