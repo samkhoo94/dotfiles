@@ -40,7 +40,7 @@ return {
                             icon_hl = "@variable",
                             desc = "Files",
                             group = "Label",
-                            action = "Telescope find_files",
+                            action = "Telescope git_files",
                             key = "f",
                         },
                     },
