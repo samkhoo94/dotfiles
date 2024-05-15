@@ -8,3 +8,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Paste last thing yanked
 vim.keymap.set("i", "<c-v>", "<c-R>0")
+
+-- Keep screen in center for half page jumping
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
