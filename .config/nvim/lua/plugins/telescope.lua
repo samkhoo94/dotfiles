@@ -14,7 +14,7 @@ return {
         { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "[S]earch Current [B]uffer" },
         { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "[S]earch [R]esume" },
         { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "[S]earch VIM [O]ptions" },
-        { "<leader>sw", false },
+        { "<leader>sw", LazyVim.telescope("grep_string"), mode = "v", desc = "[S]earch for [W]ord (Root Dir)" },
         -- GIT
         { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "[G]it [C]ommits" },
         { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "[G]it [S]tatus" },
@@ -35,11 +35,9 @@ return {
         { "<leader>fF", false },
         { '<leader>s"', false },
         { "<leader>sD", false },
-        { "<leader>sG", false },
         { "<leader>fg", false },
         { "<leader>fR", false },
         { "<leader>sa", false },
-        { "<leader>sw", false },
         { "<leader>sW", false },
         { "<leader>sW", false },
 
