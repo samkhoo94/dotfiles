@@ -1,6 +1,6 @@
 # DOTFILES
 
-FONT
+### FONT
 ShureTechMono Nerd Font ( AKA ShareTech )
 
 
