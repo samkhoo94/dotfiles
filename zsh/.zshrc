@@ -81,7 +81,7 @@ alias cdw='programming_dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/program
 # FZF
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
-
+eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
