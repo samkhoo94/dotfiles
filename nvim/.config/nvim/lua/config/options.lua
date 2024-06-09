@@ -10,3 +10,4 @@ vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
 vim.o.scrolloff = 10 -- Minimal amount of lines to keep above or below the cursor
 
 vim.o.showmode = false
+-- vim.g.autoformat = false
