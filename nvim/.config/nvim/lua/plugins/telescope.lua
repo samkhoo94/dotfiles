@@ -3,18 +3,18 @@ return {
     keys = {
 
         -- SEARCH
-        { "<leader><space>", LazyVim.telescope("buffers"), desc = "[] Find existing buffers" },
+        { "<leader><space>", LazyVim.pick("buffers"), desc = "[] Find existing buffers" },
         { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "[:] Command History" },
-        { "<leader>sf", LazyVim.telescope("files", { hidden = true }), desc = "[S]earch [F]iles" },
+        { "<leader>sf", LazyVim.pick("files", { hidden = true }), desc = "[S]earch [F]iles" },
         { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "[S]earch [K]eymaps" },
         { "<leader>sd", "<cmd>Telescope diagnostics", desc = "[S]earch Diagnostics" },
-        { "<leader>sg", LazyVim.telescope("live_grep"), desc = "[S]earch by [G]rep" },
+        { "<leader>sg", LazyVim.pick("live_grep"), desc = "[S]earch by [G]rep" },
         { "<leader>s.", "<cmd>Telescope oldfiles<cr>", desc = "[S]earch Recent Files ('.' for repeat)" },
         { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "[S]earch [H]elp" },
         { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "[S]earch Current [B]uffer" },
         { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "[S]earch [R]esume" },
         { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "[S]earch VIM [O]ptions" },
-        { "<leader>sw", LazyVim.telescope("grep_string"), mode = "v", desc = "[S]earch for [W]ord (Root Dir)" },
+        { "<leader>sw", LazyVim.pick("grep_string"), mode = "v", desc = "[S]earch for [W]ord (Root Dir)" },
         -- GIT
         { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "[G]it [C]ommits" },
         { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "[G]it [S]tatus" },
@@ -22,7 +22,7 @@ return {
         -- UI
         {
             "<leader>uC",
-            LazyVim.telescope("colorscheme", { enable_preview = true }),
+            LazyVim.pick("colorscheme", { enable_preview = true }),
             desc = "Colorscheme with Preview",
         },
 
