@@ -11,3 +11,21 @@ vim.o.scrolloff = 10 -- Minimal amount of lines to keep above or below the curso
 
 vim.o.showmode = false
 -- vim.g.autoformat = false
+--
+--
+local client = vim.lsp.start_client({
+    name = "samlsp",
+    cmd = { "/home/skhoo/programming/go/samlsp/main" },
+})
+
+if not client then
+    vim.notify("Hey you didn't do the client thing good")
+    return
+end
+
+vim.api.nvim_create_autocmd("Filetype", {
+    pattern = "markdown",
+    callback = function()
+        vim.lsp.buf_attach_client(0, client)
+    end,
+})
