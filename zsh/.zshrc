@@ -61,6 +61,7 @@ alias vw='programming_dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programm
 alias t="tmux"
 alias tn="tmux new -s"
 alias ta="tmux attach"
+alias tk="tmux kill-server"
 alias tw="tmux new-session -d -s dbt && tmux new-session -d -s airflow && tmux new-session -d -s wiz"
 alias tas="tmux attach-session -t"
 alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
