@@ -1,5 +1,5 @@
 
-import = [
+general.import = [
   "~/.config/alacritty/catppuccin-mocha.toml"
 ]
 
@@ -19,5 +19,5 @@ blur = true
 
 
 [font]
-size = 19
+size = 16
 normal.family = "ShureTechMono Nerd Font"
