@@ -208,15 +208,15 @@ down = 'volume down'
 up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
 
-# Window defaults
-[[on-window-detected]]
-if.app-id = 'dev.zed.Zed'
-run = "move-node-to-workspace 4"
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
-run = "move-node-to-workspace 4"
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = "move-node-to-workspace 6"
+# # Window defaults
+# [[on-window-detected]]
+# if.app-id = 'dev.zed.Zed'
+# run = "move-node-to-workspace 4"
+#
+# [[on-window-detected]]
+# if.app-id = 'com.microsoft.VSCode'
+# run = "move-node-to-workspace 4"
+#
+# [[on-window-detected]]
+# if.app-id = 'com.tinyspeck.slackmacgap'
+# run = "move-node-to-workspace 6"
