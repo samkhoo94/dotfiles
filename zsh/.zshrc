@@ -58,6 +58,7 @@ so() {
 alias v="nvim"
 alias vv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
 alias vw='programming_dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programming/ | fzf-tmux -p) && cd $programming_dir && nvim'  # FZF work directories and open neovim
+alias vz='nvim ~/.zshrc'
 alias t="tmux"
 alias tn="tmux new -s"
 alias ta="tmux attach"
@@ -75,7 +76,9 @@ alias l="eza --color=always --long --icons=always --all"
 alias dots="cd ~/dotfiles/"
 
 export EDITOR='nvim'
-
+# NAVIGATION AND QUALITY OF LIFE
+# dt = data transfer
+alias dt='find ~/Downloads -type f ! -name ".*" -exec basename {} \; | fzf-tmux --multi -p | xargs -I {} mv ~/Downloads/{} /Users/skhoo/programming/work/datasets/'
 alias cdw='programming_dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programming/ | fzf-tmux -p) && cd $programming_dir'  # FZF work directories
 
 ##### END ALIASES #####
