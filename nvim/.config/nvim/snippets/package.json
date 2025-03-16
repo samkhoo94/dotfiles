@@ -1,0 +1,19 @@
+{
+	"name": "sam-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": [
+					"python"
+				],
+				"path": "./python/sam_py.json"
+			},
+			{
+				"language": [
+					"sql"
+				],
+				"path": "./sql/sam_sql.json"
+			}
+		]
+	}
+}

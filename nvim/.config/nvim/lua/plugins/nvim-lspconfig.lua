@@ -17,6 +17,9 @@ return {
                         },
                     },
                 },
+                jinja_lsp = {
+                    filetypes = { "jinja", "sql" },
+                },
                 gopls = {},
             },
         },
