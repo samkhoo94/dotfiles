@@ -1,4 +1,17 @@
 {
+    "Iceberg Create Table": {
+    "prefix": "iceberg_create",
+    "body": [
+        "CREATE TABLE ${4:dev_}app.${1:[TABLE]} (",
+        "    ${2:[COLUMN]} ${3:[DATATYPE]},",
+        "    _sync_created_at timestamp(6)",
+        "    _sync_updated_at timestamp(6)",
+        ")",
+        "LOCATION 's3://midnite-data-lakehouse${4:-dev}/raw/app/${1:[TABLE]}'",
+        "TBLPROPERTIES ( 'table_type' = 'iceberg', 'format' = 'PARQUET', 'write_compression' = 'SNAPPY'"
+    ],
+    "description": "Create an Iceberg table."
+    },
     "DBT Model Template": {
         "prefix": "dbtmodel",
         "body": [
@@ -23,42 +36,5 @@
             "select * from source_data",
             ""
         ]
-    },
-    "Generate Dag": {
-        "prefix": "dag",
-        "body": [
-            "\"\"\"",
-            "${1:[DESCRIPTION GOES HERE]}",
-            "=============================================================================",
-            "Author: ${2:[YOUR_NAME]}",
-            "Team: ${3:[YOUR TEAM]}",
-            "=============================================================================",
-            "Maintained By  : ${2:[YOUR_NAME]}",
-            "Date last modified: ${4:[YYYY-MM-DD]}",
-            "=============================================================================",
-            "\"\"\"",
-            "from airflow import DAG",
-            "from pendulum import datetime",
-            "${0:#[IMPORTS]}",
-            "",
-            "default_args = {",
-            "\t\"owner\": \"data-platform\",",
-            "\t\"email\": [\"bireports@outfittery.de\"],",
-            "\t\"email_on_retry\": False,",
-            "\t\"email_on_failure\": True,",
-            "\t\"retries\": 2",
-            "}",
-            "",
-            "dag = DAG(",
-            "\t\"${5:[DAG_ID]}\",",
-            "\tdefault_args=default_args,",
-            "\tdescription=\"${6:[DESCRIPTION]}\",",
-            "\tstart_date=datetime(2023, 1, 1, tz=\"CET\"),",
-            "\tschedule=\"@daily\",",
-            "\tcatchup=False,",
-            "\ttags=[\"${7:[TAG]}\"]",
-            ")"
-        ],
-        "description": "Generate a Basic DAG template for Airflow"
     }
 }
