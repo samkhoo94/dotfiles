@@ -13,3 +13,10 @@ vim.keymap.set("n", "<c-v>", "<c-R>0")
 -- Keep screen in center for half page jumping
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
+-- Copilot accept suggestion
+vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
+    expr = true,
+    replace_keycodes = false,
+})
+vim.g.copilot_no_tab_map = true
