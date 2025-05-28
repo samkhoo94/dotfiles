@@ -21,3 +21,23 @@ blur = true
 [font]
 size = 16
 normal.family = "ShureTechMono Nerd Font"
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Command"
+chars = "\u001bb"  # ESC + b → move backward by word
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Command"
+chars = "\u001bf"  # ESC + f → move forward by word
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Alt"
+chars = "\u0001"  # Ctrl+A → beginning of line
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Alt"
+chars = "\u0005"  # Ctrl+E → end of line
