@@ -22,6 +22,7 @@ blur = true
 size = 16
 normal.family = "ShureTechMono Nerd Font"
 
+# Use Cmd+Left/Right to move by word
 [[keyboard.bindings]]
 key = "Left"
 mods = "Command"
@@ -32,6 +33,7 @@ key = "Right"
 mods = "Command"
 chars = "\u001bf"  # ESC + f → move forward by word
 
+# Use Alt+Left/Right to move to the beginning/end of the line
 [[keyboard.bindings]]
 key = "Left"
 mods = "Alt"
@@ -41,3 +43,9 @@ chars = "\u0001"  # Ctrl+A → beginning of line
 key = "Right"
 mods = "Alt"
 chars = "\u0005"  # Ctrl+E → end of line
+
+# Use Cmd+Backspace to delete the word before the cursor
+[[keyboard.bindings]]
+key = "Back"
+mods = "Command"
+chars = "\u0017"  # Ctrl+W (backward-kill-word)
