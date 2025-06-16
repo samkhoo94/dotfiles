@@ -5,7 +5,7 @@ return {
     opts = {
         modes = {
             search = {
-                enabled = true, -- Enable search mode
+                enabled = false, -- Enable / Disable search mode
             },
         },
     },
@@ -43,7 +43,7 @@ return {
             desc = "Treesitter Search",
         },
         {
-            "<c-s>",
+            "<c-a>",
             mode = { "c" },
             function()
                 require("flash").toggle()
