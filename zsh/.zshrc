@@ -63,7 +63,7 @@ alias t="tmux"
 alias tn="tmux new -s"
 alias ta="tmux attach"
 alias tk="tmux kill-server"
-alias tw="tmux new-session -d -s dagster && tmux new-session -d -s looker && tmux new-session -d -s wiz"
+alias tw="tmux new-session -d -s dagster && tmux new-session -d -s appsmith && tmux new-session -d -s looker && tmux new-session -d -s wiz"
 alias tas="tmux attach-session -t"
 alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
 #NEOVIM
