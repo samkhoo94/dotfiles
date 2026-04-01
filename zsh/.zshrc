@@ -7,6 +7,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export EDITOR='nvim'
 
 
 ############### USER CONFIGUATION ###################
@@ -19,7 +20,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # UPDATES & PLUGINS
 zstyle ':omz:update' mode reminder
-plugins=(git)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # SOURCE ENVARS
@@ -29,6 +30,7 @@ source ~/.zshrc_env
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 
 # Function to source
 # 1. Python virtual environments
@@ -57,7 +59,7 @@ so() {
 # TMUX
 alias v="nvim"
 alias vv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
-alias vw='programming_dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programming/ | fzf-tmux -p) && cd $programming_dir && nvim'  # FZF work directories and open neovim
+alias vw='cdw && nvim'
 alias vz='nvim ~/.zshrc'
 alias t="tmux"
 alias tn="tmux new -s"
@@ -67,7 +69,6 @@ alias tw="tmux new-session -d -s dagster && tmux new-session -d -s infra && tmux
 alias tas="tmux attach-session -t"
 alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
 #NEOVIM
-alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
 alias nvim-kickstart="NVIM_APPNAME=KickstartNvim nvim"
 # EZA ( NICE LS )
 alias ll="eza --color=always --long --icons=always"
@@ -76,11 +77,14 @@ alias l="eza --color=always --long --icons=always --all"
 alias dots="cd ~/dotfiles/"
 alias ss="source .venv/bin/activate"
 
-export EDITOR='nvim'
 # NAVIGATION AND QUALITY OF LIFE
 # dt = data transfer
-alias dt='find ~/Downloads -type f ! -name ".*" -exec basename {} \; | fzf-tmux --multi -p | xargs -I {} mv ~/Downloads/{} /Users/skhoo/programming/work/datasets/'
-alias cdw='programming_dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programming/ | fzf-tmux -p) && cd $programming_dir'  # FZF work directories
+alias dt='fd --type f . ~/Downloads | fzf-tmux --multi -p | xargs -I {} mv {} "$HOME/programming/work/datasets/"'
+cdw() {
+    local dir
+    dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programming/ | fzf-tmux -p)
+    [[ -n "$dir" ]] && cd "$dir"
+}
 
 ##### END ALIASES #####
 
