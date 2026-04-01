@@ -3,13 +3,15 @@ return {
     event = "VeryLazy",
     opts = {
         plugins = { spelling = true },
-        defaults = {
+        spec = {
             mode = { "n", "v" },
             { "<leader><tab>", group = "[tabs]" },
+            { "<leader>a", group = "[a]i" },
             { "<leader>b", group = "[b]uffer" },
             { "<leader>c", group = "[c]ode" },
             { "<leader>f", group = "[f]ile/find" },
             { "<leader>g", group = "[g]it" },
+            { "<leader>h", group = "[h]arpoon" },
             { "<leader>q", group = "[q]uit/session" },
             { "<leader>s", group = "[s]earch" },
             { "<leader>u", group = "[u]i" },
@@ -24,8 +26,4 @@ return {
             { "z", group = "fold" },
         },
     },
-    config = function(_, opts)
-        local wk = require("which-key")
-        wk.setup(opts)
-    end,
 }
