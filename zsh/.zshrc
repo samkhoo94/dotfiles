@@ -70,6 +70,7 @@ alias vv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
 alias vw='cdw && nvim'
 alias vz='nvim ~/.zshrc'
 alias nvim-kickstart="NVIM_APPNAME=KickstartNvim nvim"
+alias nvim-personal="NVIM_APPNAME=nvim-personal nvim"
 
 # ─── Aliases: Tmux ────────────────────────────────────────────────────────────
 
