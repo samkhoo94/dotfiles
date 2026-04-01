@@ -5,49 +5,49 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Path to your oh-my-zsh installation.
+# ─── Exports ──────────────────────────────────────────────────────────────────
+
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR='nvim'
+export PYENV_ROOT="$HOME/.pyenv"
 
+# ─── Oh My Zsh ────────────────────────────────────────────────────────────────
 
-############### USER CONFIGUATION ###################
-# FOR NEW INSTALL TO FIX CLOCK ISSUE
-# timedatectl set-local-rtc 1 --adjust-system-clock
-
-# THEMING
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-
-# UPDATES & PLUGINS
 zstyle ':omz:update' mode reminder
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git)
+
 source $ZSH/oh-my-zsh.sh
 
-# SOURCE ENVARS
+# Installed via: brew install zsh-autosuggestions zsh-syntax-highlighting
+[[ -f $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ─── Environment ──────────────────────────────────────────────────────────────
+
 source ~/.zshrc_env
 
-# PYENV
-export PYENV_ROOT="$HOME/.pyenv"
+# ─── Pyenv ────────────────────────────────────────────────────────────────────
+
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
-# Function to source
-# 1. Python virtual environments
-# 2. ZSH
+# ─── Functions ────────────────────────────────────────────────────────────────
+
+# Fuzzy-select a virtualenv from ~/env/ or reload .zshrc
 so() {
-    # Get list of virtual environments
+    local venvs selected_item
     venvs=$(fd . --type d --max-depth 1 "$HOME/env/")
+    selected_item=$(echo -e ".zshrc\n$venvs" | fzf-tmux -p)
 
-    # Use fzf to select virtual environment or .zshrc
-    selected_item=$(echo -e ".zshrc\n$venvs" | fzf-tmux -p )
-
-    # If .zshrc is selected, source the file
     if [ "$selected_item" = ".zshrc" ]; then
         source ~/.zshrc
         echo "Sourced .zshrc file."
     elif [ -n "$selected_item" ]; then
-        # Activate selected virtual environment
         source "$selected_item/bin/activate"
         echo "Activated virtual environment: $selected_item"
     else
@@ -55,46 +55,46 @@ so() {
     fi
 }
 
-##### ALIASES #####
-# TMUX
-alias v="nvim"
-alias vv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
-alias vw='cdw && nvim'
-alias vz='nvim ~/.zshrc'
-alias t="tmux"
-alias tn="tmux new -s"
-alias ta="tmux attach"
-alias tk="tmux kill-server"
-alias tw="tmux new-session -d -s dagster && tmux new-session -d -s infra && tmux new-session -d -s omni && tmux new-session -d -s wiz"
-alias tas="tmux attach-session -t"
-alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
-#NEOVIM
-alias nvim-kickstart="NVIM_APPNAME=KickstartNvim nvim"
-# EZA ( NICE LS )
-alias ll="eza --color=always --long --icons=always"
-alias l="eza --color=always --long --icons=always --all"
-# DOTFILES
-alias dots="cd ~/dotfiles/"
-alias ss="source .venv/bin/activate"
-
-# NAVIGATION AND QUALITY OF LIFE
-# dt = data transfer
-alias dt='fd --type f . ~/Downloads | fzf-tmux --multi -p | xargs -I {} mv {} "$HOME/programming/work/datasets/"'
+# Fuzzy-select a project directory under ~/programming/
+unalias cdw 2>/dev/null
 cdw() {
     local dir
     dir=$(fd . --type d --max-depth 2 --min-depth 2 ~/programming/ | fzf-tmux -p)
     [[ -n "$dir" ]] && cd "$dir"
 }
 
-##### END ALIASES #####
+# ─── Aliases: Editor ──────────────────────────────────────────────────────────
 
+alias v="nvim"
+alias vv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
+alias vw='cdw && nvim'
+alias vz='nvim ~/.zshrc'
+alias nvim-kickstart="NVIM_APPNAME=KickstartNvim nvim"
 
-#################### END USER CONFIGUATION #####################
+# ─── Aliases: Tmux ────────────────────────────────────────────────────────────
 
-# FZF
-# Set up fzf key bindings and fuzzy completion
+alias t="tmux"
+alias tn="tmux new -s"
+alias ta="tmux attach"
+alias tas="tmux attach-session -t"
+alias tk="tmux kill-server"
+alias tw="tmux new-session -d -s dagster && tmux new-session -d -s infra && tmux new-session -d -s omni && tmux new-session -d -s wiz"
+alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
+
+# ─── Aliases: Navigation ──────────────────────────────────────────────────────
+
+alias ll="eza --color=always --long --icons=always"
+alias l="eza --color=always --long --icons=always --all"
+alias dots="cd ~/dotfiles/"
+alias ss="source .venv/bin/activate"
+alias dt='fd --type f . ~/Downloads | fzf-tmux --multi -p | xargs -I {} mv {} "$HOME/programming/work/datasets/"'
+
+# ─── FZF & Zoxide ─────────────────────────────────────────────────────────────
+
 source <(fzf --zsh)
 eval "$(zoxide init zsh)"
+
+# ─── Prompt ───────────────────────────────────────────────────────────────────
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
