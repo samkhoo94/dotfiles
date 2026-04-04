@@ -54,3 +54,14 @@ chars = "\u0017"  # Ctrl+W (backward-kill-word)
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+
+# Option+, and Option+. for tmux window navigation
+[[keyboard.bindings]]
+key = "Semicolon"
+mods = "Alt"
+chars = "\u001b;"
+
+[[keyboard.bindings]]
+key = "Period"
+mods = "Alt"
+chars = "\u001b."
