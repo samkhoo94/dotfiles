@@ -90,6 +90,15 @@ alias dots="cd ~/dotfiles/"
 alias ss="source .venv/bin/activate"
 alias dt='fd --type f . ~/Downloads | fzf-tmux --multi -p | xargs -I {} mv {} "$HOME/programming/work/datasets/"'
 
+# ─── Aliases: Git ─────────────────────────────────────────────────────────────
+alias lz="lazygit"
+
+# ─── Aliases: Claude ──────────────────────────────────────────────────────────
+alias cl="claude"
+
+# ─── Aliases: Misc ────────────────────────────────────────────────────────────
+alias weather="curl wttr.in/Edinburgh"
+
 # ─── FZF & Zoxide ─────────────────────────────────────────────────────────────
 
 source <(fzf --zsh)
