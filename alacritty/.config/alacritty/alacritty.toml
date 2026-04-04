@@ -49,3 +49,8 @@ chars = "\u0005"  # Ctrl+E → end of line
 key = "Back"
 mods = "Command"
 chars = "\u0017"  # Ctrl+W (backward-kill-word)
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
