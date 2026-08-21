@@ -1,0 +1,30 @@
+# Mirrors alacritty/.config/alacritty/alacritty.toml as closely as ghostty allows.
+
+theme = Catppuccin Mocha
+
+# Match alacritty's TERM override (remote/tmux terminfo compatibility)
+term = xterm-256color
+
+window-padding-x = 2
+window-padding-y = 2
+window-decoration = false
+
+background-opacity = 0.5
+background-blur-radius = true
+
+font-family = D2KodingLigature Nerd Font
+font-size = 16
+
+# Cmd+Left/Right to move by word
+keybind = cmd+left=text:\x1bb
+keybind = cmd+right=text:\x1bf
+
+# Cmd+Backspace to delete the word before the cursor (Ctrl+W)
+keybind = cmd+backspace=text:\x17
+
+# Shift+Enter sends ESC+CR
+keybind = shift+enter=text:\x1b\r
+
+# Option+, and Option+. for tmux window navigation
+keybind = alt+semicolon=text:\x1b;
+keybind = alt+period=text:\x1b.
