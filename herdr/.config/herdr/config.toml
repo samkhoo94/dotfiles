@@ -1,0 +1,60 @@
+onboarding = false
+# herdr configuration
+# Full reference: herdr --default-config
+
+[theme]
+name = "catppuccin"
+
+auto_switch = false
+
+[ui]
+pane_gaps = false
+pane_outer_borders = false
+[keys]
+# Matches tmux prefix (tmux/.tmux.conf) for muscle memory. Raw-mode TUI, same
+# reason ctrl+s already works fine as tmux prefix without an stty ixon tweak.
+prefix = "ctrl+s"
+
+# tmux muscle memory: prefix+s = session/workspace picker
+workspace_picker = "prefix+s"
+
+# settings defaults to prefix+s, which collides w/ workspace_picker above — moved off
+settings = "prefix+shift+s"
+
+# tmux muscle memory: prefix+| side-by-side, prefix+- stacked.
+# herdr's split_horizontal already defaults to prefix+minus and matches;
+# split_vertical defaults to prefix+v, so rebind it to match tmux's "|".
+split_vertical = "prefix+|"
+
+# tmux muscle memory: prefix+d = detach
+detach = "prefix+d"
+
+# vim-tmux-navigator, ported to herdr: https://github.com/paulbkim-dev/vim-herdr-navigation
+# Vendored at herdr/.config/herdr/plugins/vim-herdr-navigation (linked as a
+# local plugin, not `herdr plugin install`, so it's tracked in dotfiles).
+# type = "shell" custom commands don't get raw (no-prefix) dispatch — only
+# type = "plugin_action" does — hence the plugin instead of a bare script.
+# nvim-side half: nvim/.config/nvim/lua/plugins/vim_tmux_navigator.lua
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "navigate left (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "navigate down (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "navigate up (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "navigate right (vim/herdr)"

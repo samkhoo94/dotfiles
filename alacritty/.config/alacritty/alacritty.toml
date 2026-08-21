@@ -33,16 +33,18 @@ key = "Right"
 mods = "Command"
 chars = "\u001bf"  # ESC + f → move forward by word
 
-# Use Alt+Left/Right to move to the beginning/end of the line
-[[keyboard.bindings]]
-key = "Left"
-mods = "Alt"
-chars = "\u0001"  # Ctrl+A → beginning of line
 
-[[keyboard.bindings]]
-key = "Right"
-mods = "Alt"
-chars = "\u0005"  # Ctrl+E → end of line
+# NOTE: removing this as it conficts with tmux's default panel size adjustments
+# Use Alt+Left/Right to move to the beginning/end of the line
+# [[keyboard.bindings]]
+# key = "Left"
+# mods = "Alt"
+# chars = "\u0001"  # Ctrl+A → beginning of line
+# [[keyboard.bindings]]
+#
+# key = "Right"
+# mods = "Alt"
+# chars = "\u0005"  # Ctrl+E → end of line
 
 # Use Cmd+Backspace to delete the word before the cursor
 [[keyboard.bindings]]
