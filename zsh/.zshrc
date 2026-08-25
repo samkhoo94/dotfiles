@@ -70,8 +70,8 @@ vv() {
         return 1
     fi
     local base="$HERDR_PANE_ID" claude_pane bottom_left
-    claude_pane=$(herdr pane split --pane "$base" --direction right --ratio 0.70 --no-focus | jq -r '.result.pane.pane_id')
-    bottom_left=$(herdr pane split --pane "$base" --direction down --ratio 0.80 --no-focus | jq -r '.result.pane.pane_id')
+    claude_pane=$(herdr pane split --pane "$base" --direction right --ratio 0.60 --no-focus | jq -r '.result.pane.pane_id')
+    bottom_left=$(herdr pane split --pane "$base" --direction down --ratio 0.70 --no-focus | jq -r '.result.pane.pane_id')
     herdr pane run "$base" nvim
     herdr pane run "$claude_pane" claude
 }

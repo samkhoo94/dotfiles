@@ -7,6 +7,9 @@ name = "catppuccin"
 
 auto_switch = false
 
+[theme.custom]
+panel_bg = "reset"
+
 [ui]
 pane_gaps = false
 pane_outer_borders = false
@@ -28,6 +31,9 @@ split_vertical = "prefix+|"
 
 # tmux muscle memory: prefix+d = detach
 detach = "prefix+d"
+
+# prefix+p was previous_tab by default; toggle_sidebar defaults to prefix+b
+toggle_sidebar = "prefix+p"
 
 # vim-tmux-navigator, ported to herdr: https://github.com/paulbkim-dev/vim-herdr-navigation
 # Vendored at herdr/.config/herdr/plugins/vim-herdr-navigation (linked as a
