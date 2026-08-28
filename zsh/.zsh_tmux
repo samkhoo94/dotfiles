@@ -1,0 +1,14 @@
+# tmux aliases. Not sourced from .zshrc right now (see herdr migration in
+# .zsh_herdr) — source this manually, or add `source ~/.zsh_tmux` back to
+# .zshrc, if you switch back to tmux.
+
+alias t="tmux"
+alias tn="tmux new -s"
+alias ta="tmux attach"
+alias tas="tmux attach-session -t"
+alias tk="tmux kill-server"
+alias tw="tmux new-session -d -s dagster && tmux new-session -d -s infra && tmux new-session -d -s omni && tmux new-session -d -s wiz"
+alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
+
+# Opens a 3 pane tmux session for nvim, terminal, claude. Must be run inside tmux.
+alias vv='tmux split-window -v -p 25 \; split-window -h -p 35 -t 1 \; send-keys -t 1 "nvim" Enter \; send-keys -t 2 "claude" Enter \; select-pane -t 1'

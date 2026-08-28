@@ -1,12 +1,11 @@
 return {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "folke/tokyonight.nvim",
     priority = 1000,
     opts = {
-        transparent_background = true,
-        dim_inactive = { enabled = false },
+        style = "storm",
+        transparent = true,
     },
     init = function()
-        vim.cmd.colorscheme("catppuccin")
+        vim.cmd.colorscheme("tokyonight")
     end,
 }

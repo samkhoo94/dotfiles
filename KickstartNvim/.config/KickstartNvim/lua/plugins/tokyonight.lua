@@ -1,17 +1,15 @@
 return { -- You can easily change to a different colorscheme.
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  'catppuccin/nvim',
-  name = 'catppuccin',
+  'folke/tokyonight.nvim',
   priority = 1000, -- Make sure to load this before all the other start plugins.
   init = function()
-    require('catppuccin').setup {
-      flavour = 'mocha',
-      transparent_background = true,
+    require('tokyonight').setup {
+      style = 'storm',
+      transparent = true,
     }
     -- Load the colorscheme here.
-    -- Like many other themes, this one has different styles, and you could load
-    -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-    vim.cmd.colorscheme 'catppuccin'
+    -- Other styles: 'tokyonight-night', 'tokyonight-moon', 'tokyonight-day'.
+    vim.cmd.colorscheme 'tokyonight'
 
     -- You can configure highlights by doing something like:
     vim.cmd.hi 'Comment gui=none'

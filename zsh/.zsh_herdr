@@ -1,0 +1,140 @@
+# herdr aliases and functions. Sourced from .zshrc.
+
+# ─── Basics ───────────────────────────────────────────────────────────────────
+
+alias h="herdr"
+alias hn="herdr --session"
+alias ha="herdr"
+alias has="herdr session attach"
+
+# ─── Layout helpers ───────────────────────────────────────────────────────────
+
+# Split `pane` into `count` equal-sized pieces along `direction` (down or
+# right), returned as a space-separated list of pane ids. Works by repeatedly
+# splitting off one piece at a time: at each step the piece being split off is
+# given ratio 1/remaining of whatever's left, so all pieces end up equal size.
+_herdr_split_even() {
+    local pane="$1" count="$2" direction="$3"
+    local pieces=()
+    local remaining=$count
+    while (( remaining > 1 )); do
+        local ratio=$(( (remaining - 1.0) / remaining ))
+        local new_pane="$(herdr pane split --pane "$pane" --direction "$direction" --ratio "$ratio" --no-focus | jq -r '.result.pane.pane_id')"
+        pieces+=("$new_pane")
+        (( remaining-- ))
+    done
+    pieces+=("$pane")
+    print -- "${pieces[@]}"
+}
+
+# Splits the current herdr pane into nvim (top-left, big) + claude (right
+# column, full height) + a plain terminal (bottom-left, small). Must be run
+# inside a herdr pane.
+unalias vv 2>/dev/null
+vv() {
+    if [[ -z "$HERDR_PANE_ID" ]]; then
+        echo "vv: not inside a herdr pane" >&2
+        return 1
+    fi
+    local base="$HERDR_PANE_ID" claude_pane bottom_left
+    claude_pane=$(herdr pane split --pane "$base" --direction right --ratio 0.60 --no-focus | jq -r '.result.pane.pane_id')
+    bottom_left=$(herdr pane split --pane "$base" --direction down --ratio 0.70 --no-focus | jq -r '.result.pane.pane_id')
+    herdr pane run "$base" nvim
+    herdr pane run "$claude_pane" claude
+}
+
+# Splits the current herdr pane into a near-square grid of `n` panes (e.g.
+# n=9 -> 3x3, n=6 -> 2 rows of 3) and launches claude in every one. Usage:
+# `vc <count>`, or the vc2..vc9 shortcuts below for `vc <count>` without the
+# space. Must be run inside a herdr pane.
+unalias vc 2>/dev/null
+vc() {
+    if [[ -z "$HERDR_PANE_ID" ]]; then
+        echo "vc: not inside a herdr pane" >&2
+        return 1
+    fi
+    local n="$1"
+    if [[ -z "$n" ]] || (( n < 1 )); then
+        echo "usage: vc <count>" >&2
+        return 1
+    fi
+
+    # rows = round(sqrt(n)), for a near-square grid.
+    local f=1
+    while (( (f + 1) * (f + 1) <= n )); do (( f++ )); done
+    local rows=$f
+    (( n - f * f > (f + 1) * (f + 1) - n )) && rows=$(( f + 1 ))
+    (( rows < 1 )) && rows=1
+    (( rows > n )) && rows=n
+
+    # Spread n panes across rows as evenly as possible: `extra` rows get one
+    # extra column, so column counts differ by at most 1 (n=5,rows=2 -> 3+2).
+    local base_cols=$(( n / rows )) extra=$(( n % rows ))
+
+    local row_panes=($(_herdr_split_even "$HERDR_PANE_ID" "$rows" down))
+
+    local leaves=() i=1
+    for row_pane in "${row_panes[@]}"; do
+        local cols=$base_cols
+        (( i <= extra )) && (( cols++ ))
+        if (( cols > 1 )); then
+            leaves+=($(_herdr_split_even "$row_pane" "$cols" right))
+        else
+            leaves+=("$row_pane")
+        fi
+        (( i++ ))
+    done
+
+    sleep 0.5  # let freshly split panes' shells finish starting before typing into them
+    for pane in "${leaves[@]}"; do
+        herdr pane run "$pane" claude
+    done
+}
+
+# vc2..vc9 are just `vc <n>` without the space. vc itself takes any count
+# (e.g. `vc 12`); this range is an arbitrary convenience cutoff, not a limit.
+for _vc_n in 2 3 4 5 6 7 8 9; do
+    unalias "vc$_vc_n" 2>/dev/null
+    eval "vc${_vc_n}() { vc ${_vc_n} }"
+done
+unset _vc_n
+
+# ─── Workspaces ───────────────────────────────────────────────────────────────
+
+# Batch-creates workspaces for common projects. Unlike tmux, herdr's workspace
+# commands need a server already running — start one headless in the
+# background first if none is up.
+unalias hw 2>/dev/null
+hw() {
+    if ! herdr status server 2>/dev/null | grep -q "^status: running$"; then
+        herdr server >/dev/null 2>&1 &
+        disown
+        sleep 1
+    fi
+    herdr workspace create --label dagster --no-focus
+    herdr workspace create --label infra --no-focus
+    herdr workspace create --label omni --no-focus
+    herdr workspace create --label wiz --no-focus
+}
+
+# Fuzzy-picks a project under ~/work, opens it as a new herdr workspace, and
+# launches nvim in it. Run `ha` afterward to attach if this had to start the
+# server fresh (see `hw` above for why).
+unalias hsw 2>/dev/null
+hsw() {
+    local folder pane_id
+    folder=$(fd . --type d --max-depth 1 ~/work | fzf)
+    [[ -n "$folder" ]] || return
+    if ! herdr status server 2>/dev/null | grep -q "^status: running$"; then
+        herdr server >/dev/null 2>&1 &
+        disown
+        sleep 1
+    fi
+    pane_id=$(herdr workspace create --cwd "$folder" --label "$(basename "$folder")" | jq -r '.result.root_pane.pane_id')
+    [[ -n "$pane_id" ]] && herdr pane run "$pane_id" nvim
+}
+
+# ─── Reverting to tmux ────────────────────────────────────────────────────────
+# tmux aliases (t/tn/ta/tas/tk/tw/tsw/vv) live in .zsh_tmux, restored and ready
+# to go. To switch back: stop sourcing this file in .zshrc and instead
+# `source ~/.zsh_tmux` there (or source it manually).

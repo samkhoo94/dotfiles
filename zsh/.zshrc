@@ -63,73 +63,18 @@ cdw() {
     [[ -n "$dir" ]] && cd "$dir"
 }
 
-unalias vv 2>/dev/null
-vv() {
-    if [[ -z "$HERDR_PANE_ID" ]]; then
-        echo "vv: not inside a herdr pane" >&2
-        return 1
-    fi
-    local base="$HERDR_PANE_ID" claude_pane bottom_left
-    claude_pane=$(herdr pane split --pane "$base" --direction right --ratio 0.60 --no-focus | jq -r '.result.pane.pane_id')
-    bottom_left=$(herdr pane split --pane "$base" --direction down --ratio 0.70 --no-focus | jq -r '.result.pane.pane_id')
-    herdr pane run "$base" nvim
-    herdr pane run "$claude_pane" claude
-}
+# ─── Herdr ────────────────────────────────────────────────────────────────────
 
-unalias hw 2>/dev/null
-hw() {
-    if ! herdr status server 2>/dev/null | grep -q "^status: running$"; then
-        herdr server >/dev/null 2>&1 &
-        disown
-        sleep 1
-    fi
-    herdr workspace create --label dagster --no-focus
-    herdr workspace create --label infra --no-focus
-    herdr workspace create --label omni --no-focus
-    herdr workspace create --label wiz --no-focus
-}
-
-unalias hsw 2>/dev/null
-hsw() {
-    local folder pane_id
-    folder=$(fd . --type d --max-depth 1 ~/work | fzf)
-    [[ -n "$folder" ]] || return
-    if ! herdr status server 2>/dev/null | grep -q "^status: running$"; then
-        herdr server >/dev/null 2>&1 &
-        disown
-        sleep 1
-    fi
-    pane_id=$(herdr workspace create --cwd "$folder" --label "$(basename "$folder")" | jq -r '.result.root_pane.pane_id')
-    [[ -n "$pane_id" ]] && herdr pane run "$pane_id" nvim
-}
+[[ -f ~/.zsh_herdr ]] && source ~/.zsh_herdr
 
 # ─── Aliases: Editor ──────────────────────────────────────────────────────────
 
 alias v="nvim"
 
-# alias vv='tmux split-window -v -p 25 \; split-window -h -p 35 -t 1 \; send-keys -t 1 "nvim" Enter \; send-keys -t 2 "claude" Enter \; select-pane -t 1'
-
 alias vw='cdw && nvim'
 alias vz='nvim ~/.zshrc'
 alias nvim-kickstart="NVIM_APPNAME=KickstartNvim nvim"
 alias nvim-personal="NVIM_APPNAME=nvim-personal nvim"
-
-# ─── Aliases: Tmux ────────────────────────────────────────────────────────────
-
-# alias t="tmux"
-# alias tn="tmux new -s"
-# alias ta="tmux attach"
-# alias tas="tmux attach-session -t"
-# alias tk="tmux kill-server"
-# alias tw="tmux new-session -d -s dagster && tmux new-session -d -s infra && tmux new-session -d -s omni && tmux new-session -d -s wiz"
-# alias tsw='folder=$(fd . --type d --max-depth 1 ~/work | fzf) && tmux new-session -d -s "$(basename "$folder")" "cd \"$folder\" && nvim" && tmux attach-session -t "$(basename "$folder")"'
-
-# ─── Aliases: Herdr ───────────────────────────────────────────────────────────
-
-alias h="herdr"
-alias hn="herdr --session"
-alias ha="herdr"
-alias has="herdr session attach"
 
 # ─── Aliases: Navigation ──────────────────────────────────────────────────────
 

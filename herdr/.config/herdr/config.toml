@@ -3,16 +3,21 @@ onboarding = false
 # Full reference: herdr --default-config
 
 [theme]
-name = "catppuccin"
+name = "tokyo-night"
 
 auto_switch = false
 
 [theme.custom]
 panel_bg = "reset"
+# accent/blue are static hex, not tied to theme.name — if you switch themes
+# later, these won't adapt and will need to be re-picked or removed by hand.
+accent = "#1abc9c"
+blue = "#1abc9c"
 
 [ui]
 pane_gaps = false
 pane_outer_borders = false
+accent = "#1abc9c"
 [keys]
 # Matches tmux prefix (tmux/.tmux.conf) for muscle memory. Raw-mode TUI, same
 # reason ctrl+s already works fine as tmux prefix without an stty ixon tweak.
